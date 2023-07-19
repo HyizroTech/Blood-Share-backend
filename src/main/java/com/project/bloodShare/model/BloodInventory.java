@@ -1,32 +1,27 @@
 package com.project.bloodShare.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.*;
+import lombok.Data;
 
 @Entity
-@Table(name = "BLOOD_INVENTORY")
+@Data
+@Table(name = "Blood_Inventories")
 public class BloodInventory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "BIN_BLOOD_ID")
-	private int id;
-
-	@Column(name = "BIN_BLOOD_TYPE")
-	private String bloodType;
-
-	@Column(name = "BIN_QUANTITY")
-	private int quantity;
-
-	@Column(name = "BIN_EXPIRATION_DATE")
-	private LocalDate expirationDate;
-
-	@Column(name = "BIN_COLLECTION_DATE")
-	private LocalDate collectionDate;
+	private Long bloodInventoryId;
 
 	@ManyToOne
-	@JoinColumn(name = "DONOR_ID")
-	private Donor donorId;
+	@JoinColumn(name = "bloodBankId", referencedColumnName = "bloodBankId")
+	private BloodBank bloodBank;
 
+	@Column(nullable = false)
+	private String bloodType;
+
+	@Column(nullable = false)
+	private String bloodRhFactor;
+
+	@Column(nullable = false)
+	private int quantity;
 }

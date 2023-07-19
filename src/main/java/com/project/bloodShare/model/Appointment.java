@@ -3,28 +3,25 @@ package com.project.bloodShare.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Appointments")
 public class Appointment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "APP_APPOINTMENT_ID")
-    private int id;
+    private int appointmentId;
 
-    @Column(name = "APP_DATE")
+    @Column(nullable = false)
     private LocalDate date;
 
-	@Column(name = "APP_TIME")
+    @Column(nullable = false)
     private LocalTime time;
-    
-    @ManyToOne
-    @JoinColumn(name = "DONOR_ID")
-    private Donor donor;
 
     @ManyToOne
-    @JoinColumn(name = "CREATED_BY")
-    private User createdBy;
+    @JoinColumn(name = "donorId", referencedColumnName = "donorId")
+    private Donor donor;
 
 }

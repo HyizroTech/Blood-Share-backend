@@ -1,35 +1,29 @@
 package com.project.bloodShare.model;
 
 import javax.persistence.*;
+import java.util.Date;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Donors")
 public class Donor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "DONOR_ID")
-	private int id;
+	private Long donorId;
 
-	@Column(name = "DON_NAME")
-	private String name;
+	@OneToOne
+	@JoinColumn(name = "userId", referencedColumnName = "userId")
+	private User user;
 
-	@Column(name = "DON_EMAIL")
-	private String email;
-
-	@Column(name = "DON_PHONE")
-	private String phone;
-
-	@Column(name = "DON_ADDRESS")
-	private String address;
-
-	@Column(name = "DON_BLOOD_TYPE")
+	@Column(nullable = false)
 	private String bloodType;
 
-	@Column(name = "DON_DONATION_HISTORY")
-	private String donationHistory;
+	@Column(nullable = false)
+	private String bloodRhFactor;
 
-	@Column(name = "DON_MEDICAL_HISTORY")
-	private String medicalHistory;
+	@Column(nullable = true)
+	private Date lastDonationDate;
 
 }
