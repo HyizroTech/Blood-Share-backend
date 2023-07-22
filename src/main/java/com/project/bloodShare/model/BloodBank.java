@@ -1,6 +1,6 @@
 package com.project.bloodShare.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,6 +13,6 @@ public class BloodBank {
     private Long bloodBankId;
 
     @OneToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "bloodBankId")
     private User user;
 }
