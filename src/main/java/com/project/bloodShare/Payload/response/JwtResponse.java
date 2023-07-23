@@ -3,19 +3,21 @@ package com.project.bloodShare.Payload.response;
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
-    private Long id;
     private String name;
-    private String email;
+    private String role;
 
-
-
-
-    public JwtResponse(String accessToken, Long id, String name, String email) {
+    public JwtResponse(String accessToken, String name, String role) {
         this.token = accessToken;
-        this.id = id;
         this.name = name;
-        this.email = email;
+        this.role = role;
+    }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getAccessToken() {
@@ -34,22 +36,6 @@ public class JwtResponse {
         this.type = tokenType;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getName() {
         return name;
     }
@@ -57,9 +43,4 @@ public class JwtResponse {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-
-
 }
