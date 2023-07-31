@@ -1,7 +1,12 @@
 package com.project.bloodShare.SecurityConfig.services;
 
+<<<<<<< HEAD
 import com.project.bloodShare.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.bloodShare.model.User;
+>>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
