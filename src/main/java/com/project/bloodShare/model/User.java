@@ -46,10 +46,10 @@ public class User {
 	@Size(max = 20)
 	private String country;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
 	private Donor donor;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
 	private BloodBank bloodBank;
 	public User(){
 

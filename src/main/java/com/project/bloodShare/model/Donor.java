@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,4 +23,9 @@ public class Donor {
     @OneToOne
     @JoinColumn(name = "donorId")
     private User user;
+
+    @OneToMany(targetEntity = Appointment.class,fetch = FetchType.LAZY ,
+            cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "donor_id", referencedColumnName = "donorId")
+    private Set<Appointment> appointments;
 }
