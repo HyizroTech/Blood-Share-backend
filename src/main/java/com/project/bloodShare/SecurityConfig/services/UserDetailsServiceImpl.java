@@ -1,10 +1,6 @@
 package com.project.bloodShare.SecurityConfig.services;
 
-<<<<<<< HEAD
 import com.project.bloodShare.Repostories.UserRepository;
-=======
-import com.project.bloodShare.Repositories.UserRepository;
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 import com.project.bloodShare.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,6 @@
 package com.project.bloodShare.Controllers;
 
 import com.project.bloodShare.Payload.request.BloodBankSignupRequest;
-<<<<<<< HEAD
 import com.project.bloodShare.Payload.request.LoginRequest;
 import com.project.bloodShare.Payload.request.DonorSignupRequest;
 import com.project.bloodShare.Payload.response.JwtResponse;
@@ -11,19 +10,6 @@ import com.project.bloodShare.Repostories.UserRepository;
 import com.project.bloodShare.SecurityConfig.jwt.JwtUtils;
 import com.project.bloodShare.SecurityConfig.services.UserDetailsImpl;
 import com.project.bloodShare.model.*;
-=======
-import com.project.bloodShare.Payload.request.DonorSignupRequest;
-import com.project.bloodShare.Payload.request.LoginRequest;
-import com.project.bloodShare.Payload.response.JwtResponse;
-import com.project.bloodShare.Payload.response.MessageResponse;
-import com.project.bloodShare.Repositories.DonorRepository;
-import com.project.bloodShare.Repositories.UserRepository;
-import com.project.bloodShare.SecurityConfig.jwt.JwtUtils;
-import com.project.bloodShare.SecurityConfig.services.UserDetailsImpl;
-import com.project.bloodShare.model.BloodBank;
-import com.project.bloodShare.model.Donor;
-import com.project.bloodShare.model.User;
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,10 +55,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getUsername(),
                 userDetails.getRole()
-<<<<<<< HEAD
 
-=======
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
         ));
     }
 

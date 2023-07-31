@@ -1,23 +1,14 @@
 package com.project.bloodShare.model;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-<<<<<<< HEAD
 @Data
 @Entity
-=======
-
-@Entity
-@Data
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 @Table(name = "Users",uniqueConstraints = {
 		@UniqueConstraint(columnNames = "email")
 })
@@ -55,17 +46,10 @@ public class User {
 	@Size(max = 20)
 	private String country;
 
-<<<<<<< HEAD
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
 	private Donor donor;
 
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
-=======
-	@OneToOne(cascade = jakarta.persistence.CascadeType.ALL, mappedBy = "user")
-	private Donor donor;
-
-	@OneToOne(cascade = jakarta.persistence.CascadeType.ALL, mappedBy = "user")
->>>>>>> acc7ed584275b2b5011af5e33c78dff94200b225
 	private BloodBank bloodBank;
 	public User(){
 
