@@ -26,7 +26,7 @@ public class PatientController {
     @Autowired
     PatientRepository patientRepository;
 
-    @PostMapping("bloodBank/{id}/patient")
+    @PostMapping("/bloodBank/{id}/patient")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<?> createBloodBankPatients(@PathVariable(value = "id") Long bloodBankId,
                                                            @RequestBody Patient patientRequest) {
@@ -36,7 +36,7 @@ public class PatientController {
             return ResponseEntity.ok(new MessageResponse("Patient registered successfully!"));
         }).orElseThrow(() -> new ResourceNotFoundException("Not found BloodBank with id = " + bloodBankId));
     }
-    @GetMapping("bloodBank/{id}/patients")
+    @GetMapping("/bloodBank/{id}/patients")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<List<Patient>> getBloodBankPatients(@PathVariable(value = "id") Long bloodBankid) {
         Optional<BloodBank> optionalBloodBank = bloodBankRepository.findById(bloodBankid);

@@ -27,7 +27,7 @@ public class BloodInventoryController {
     @Autowired
     BloodBankRepository bloodBankRepository;
 
-    @PostMapping("bloodBank/{id}/bloodInventory")
+    @PostMapping("/bloodBank/{id}/bloodInventory")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<?> createBloodInventory(@PathVariable(value = "id") Long bloodBankId,
                                                      @RequestBody BloodInventory bloodInventoryRequest) {
@@ -39,7 +39,7 @@ public class BloodInventoryController {
     }
 
 
-    @GetMapping("bloodBank/{id}/bloodInventories")
+    @GetMapping("/bloodBank/{id}/bloodInventories")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<List<BloodInventory>> getBloodInventories(@PathVariable(value = "id") Long bloodBankid) {
         Optional<BloodBank> optionalBloodBank = bloodBankRepository.findById(bloodBankid);

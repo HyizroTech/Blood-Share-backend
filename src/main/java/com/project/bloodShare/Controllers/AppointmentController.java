@@ -27,7 +27,7 @@ public class AppointmentController {
     @Autowired
     AppointmentRepository appointmentRepository;
 
-    @PostMapping("donor/{id}/appointment")
+    @PostMapping("/donor/{id}/appointment")
     @PreAuthorize("hasAuthority('Donor')")
     public ResponseEntity<?> createAppointment(@PathVariable(value = "id") Long donorId,
                                                      @RequestBody Appointment appointmentRequest) {
@@ -39,7 +39,7 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("donor/{id}/appointments")
+    @GetMapping("/donor/{id}/appointments")
     @PreAuthorize("hasAuthority('Donor')")
     public ResponseEntity<List<Appointment>> getDonorAppointments(@PathVariable(value = "id") Long donorId) {
         Optional<Donor> optionalDonor = donorRepository.findById(donorId);

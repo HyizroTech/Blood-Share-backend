@@ -1,6 +1,7 @@
 package com.project.bloodShare.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotBlank;
@@ -46,9 +47,11 @@ public class User {
 	@Size(max = 20)
 	private String country;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
 	private Donor donor;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
 	private BloodBank bloodBank;
 	public User(){

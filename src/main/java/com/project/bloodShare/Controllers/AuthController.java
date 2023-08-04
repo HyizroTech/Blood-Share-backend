@@ -1,5 +1,6 @@
 package com.project.bloodShare.Controllers;
 
+import com.project.bloodShare.Payload.request.AdminSignupRequest;
 import com.project.bloodShare.Payload.request.BloodBankSignupRequest;
 import com.project.bloodShare.Payload.request.LoginRequest;
 import com.project.bloodShare.Payload.request.DonorSignupRequest;
@@ -90,6 +91,8 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+
+
     @PostMapping("/register/BloodBank")
     public ResponseEntity<?> registerBloodBank(@Valid @RequestBody BloodBankSignupRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -121,6 +124,32 @@ public class AuthController {
 
 
     }
+
+    @PostMapping("/register/admin")
+    public ResponseEntity<?> registerAdmin(@Valid @RequestBody AdminSignupRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already taken!"));
+        }
+
+
+        // Create new user's account
+        User user = new User(signUpRequest.getName(),
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.setRole("Admin"),
+                signUpRequest.getEmail(),
+                signUpRequest.getPhone(),
+                signUpRequest.getCity(),
+                signUpRequest.getCountry()
+        );
+
+        userRepository.save(user);
+
+
+        return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
+    }
+
 
 
 

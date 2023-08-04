@@ -4,7 +4,6 @@ import com.project.bloodShare.Exceptions.ResourceNotFoundException;
 import com.project.bloodShare.Repostories.DonorRepository;
 import com.project.bloodShare.Repostories.UserRepository;
 import com.project.bloodShare.model.Donor;
-import com.project.bloodShare.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -8,7 +8,6 @@ public class BloodShareApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BloodShareApplication.class, args);
-		// test
 	}
 
 }
