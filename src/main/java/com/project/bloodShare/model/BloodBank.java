@@ -16,8 +16,8 @@ public class BloodBank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bloodBankId;
 
-    @JsonIgnore
     @OneToOne
+    @MapsId
     @JoinColumn(name = "bloodBankId")
     private User user;
 
@@ -30,5 +30,10 @@ public class BloodBank {
             cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "bloodBank_Id", referencedColumnName = "bloodBankId")
     private Set<BloodInventory> bloodInventories;
+
+    @OneToMany(targetEntity = Appointment.class,fetch = FetchType.LAZY ,
+            cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "bloodBank_Id", referencedColumnName = "bloodBankId")
+    private Set<Appointment> appointments;
 
 }

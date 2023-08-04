@@ -1,6 +1,7 @@
 package com.project.bloodShare.Controllers;
 
 import com.project.bloodShare.Exceptions.ResourceNotFoundException;
+import com.project.bloodShare.Payload.request.BloodBankDTO;
 import com.project.bloodShare.Repostories.BloodBankRepository;
 import com.project.bloodShare.Repostories.DonorRepository;
 import com.project.bloodShare.Repostories.UserRepository;
@@ -31,18 +32,28 @@ public class AdminController {
     BloodBankRepository bloodBankRepository;
 
     @GetMapping("/admin/bloodBanks")
-    @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<List<BloodBank>> getBloodBanks() {
+    @PreAuthorize("hasAuthority('Admin') or hasAuthority('Donor')")
+    public ResponseEntity<List<BloodBankDTO>> getBloodBanks() {
         List<BloodBank> optionalBloodBank = bloodBankRepository.findAll();
 
         if (optionalBloodBank.isEmpty()) {
             throw new ResourceNotFoundException("No BloodBanks Found = ");
         }
 
-        else {
-            return ResponseEntity.ok(new ArrayList<>(optionalBloodBank));
+        List<BloodBankDTO> bloodBankDTOs = new ArrayList<>();
+
+        // Map BloodBank entity to BloodBankDTO
+        for (BloodBank bloodBank : optionalBloodBank) {
+            BloodBankDTO dto = new BloodBankDTO();
+            dto.setName(bloodBank.getUser().getName());
+            dto.setPhone(bloodBank.getUser().getPhone());
+            dto.setCity(bloodBank.getUser().getCity());
+            bloodBankDTOs.add(dto);
         }
+
+        return ResponseEntity.ok(bloodBankDTOs);
     }
+
 
     @GetMapping("/admin/donors")
     @PreAuthorize("hasAuthority('Admin')")

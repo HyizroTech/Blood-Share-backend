@@ -21,6 +21,7 @@ public class Donor {
     private LocalDate lastDonationDate;
 
     @OneToOne
+    @MapsId
     @JoinColumn(name = "donorId")
     private User user;
 

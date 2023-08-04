@@ -49,10 +49,12 @@ public class User {
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
+	@PrimaryKeyJoinColumn
 	private Donor donor;
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true,mappedBy = "user")
+	@PrimaryKeyJoinColumn
 	private BloodBank bloodBank;
 	public User(){
 

@@ -3,8 +3,10 @@ package com.project.bloodShare.Controllers;
 import com.project.bloodShare.Exceptions.ResourceNotFoundException;
 import com.project.bloodShare.Payload.response.MessageResponse;
 import com.project.bloodShare.Repostories.AppointmentRepository;
+import com.project.bloodShare.Repostories.BloodBankRepository;
 import com.project.bloodShare.Repostories.DonorRepository;
 import com.project.bloodShare.model.Appointment;
+import com.project.bloodShare.model.BloodBank;
 import com.project.bloodShare.model.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,16 +29,44 @@ public class AppointmentController {
     @Autowired
     AppointmentRepository appointmentRepository;
 
-    @PostMapping("/donor/{id}/appointment")
+    @Autowired
+    BloodBankRepository bloodBankRepository;
+
+//    @PostMapping("/donor/{id}/bloodBank/{bloodBankId}/appointment")
+//    @PreAuthorize("hasAuthority('Donor')")
+//    public ResponseEntity<?> createAppointment(@PathVariable(value = "id") Long donorId,@PathVariable(value = "bloodBankId") Long bloodBankId,
+//                                                     @RequestBody Appointment appointmentRequest) {
+//        return donorRepository.findById(donorId).map(donor -> {
+//            donor.getAppointments().add(appointmentRequest);
+//            appointmentRepository.save(appointmentRequest);
+//            return ResponseEntity.ok(new MessageResponse("Appointment registered successfully!"));
+//        }).orElseThrow(() -> new ResourceNotFoundException("Not found Donor with id = " + donorId));
+//    }
+
+    @PostMapping("/donor/{id}/bloodBank/{bloodBankId}/appointment")
     @PreAuthorize("hasAuthority('Donor')")
-    public ResponseEntity<?> createAppointment(@PathVariable(value = "id") Long donorId,
-                                                     @RequestBody Appointment appointmentRequest) {
-        return donorRepository.findById(donorId).map(donor -> {
-            donor.getAppointments().add(appointmentRequest);
-            appointmentRepository.save(appointmentRequest);
-            return ResponseEntity.ok(new MessageResponse("Appointment registered successfully!"));
-        }).orElseThrow(() -> new ResourceNotFoundException("Not found Donor with id = " + donorId));
+    public ResponseEntity<?> createAppointment(
+            @PathVariable(value = "id") Long donorId,
+            @PathVariable(value = "bloodBankId") Long bloodBankId,
+            @RequestBody Appointment appointmentRequest) {
+
+        Donor donor = donorRepository.findById(donorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Donor with id = " + donorId));
+
+        BloodBank bloodBank = bloodBankRepository.findById(bloodBankId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found BloodBank with id = " + bloodBankId));
+
+        donor.getAppointments().add(appointmentRequest);
+        bloodBank.getAppointments().add(appointmentRequest);
+        appointmentRepository.save(appointmentRequest);
+
+
+
+
+        return ResponseEntity.ok(new MessageResponse("Appointment registered successfully!"));
     }
+
+
 
 
     @GetMapping("/donor/{id}/appointments")

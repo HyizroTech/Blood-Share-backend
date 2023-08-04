@@ -54,6 +54,7 @@ public class AuthController {
 
 
         return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getRole()
 
@@ -119,7 +120,7 @@ public class AuthController {
         userRepository.save(user);
 
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("BloodBank registered successfully!"));
 
 
 
