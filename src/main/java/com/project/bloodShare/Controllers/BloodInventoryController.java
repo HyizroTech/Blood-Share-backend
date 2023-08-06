@@ -19,7 +19,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth/test")
+@RequestMapping("/api")
 public class BloodInventoryController {
     @Autowired
     BloodInventoryRepository bloodInventoryRepository;
@@ -30,14 +30,13 @@ public class BloodInventoryController {
     @PostMapping("/bloodBank/{id}/bloodInventory")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<?> createBloodInventory(@PathVariable(value = "id") Long bloodBankId,
-                                                     @RequestBody BloodInventory bloodInventoryRequest) {
+            @RequestBody BloodInventory bloodInventoryRequest) {
         return bloodBankRepository.findById(bloodBankId).map(bloodBank -> {
             bloodBank.getBloodInventories().add(bloodInventoryRequest);
             bloodInventoryRepository.save(bloodInventoryRequest);
             return ResponseEntity.ok(new MessageResponse("BloodInventory registered successfully!"));
         }).orElseThrow(() -> new ResourceNotFoundException("Not found BloodBank with id = " + bloodBankId));
     }
-
 
     @GetMapping("/bloodBank/{id}/bloodInventories")
     @PreAuthorize("hasAuthority('BloodBank')")
@@ -51,7 +50,7 @@ public class BloodInventoryController {
         BloodBank bloodBank = optionalBloodBank.get();
         Set<BloodInventory> bloodInventories = bloodBank.getBloodInventories();
 
-        if(bloodInventories.isEmpty()){
+        if (bloodInventories.isEmpty()) {
             throw new ResourceNotFoundException("No BloodInventories Found");
         }
 
@@ -59,13 +58,14 @@ public class BloodInventoryController {
             return ResponseEntity.ok(new ArrayList<>(bloodInventories));
         }
     }
+
     @PutMapping("/bloodInventory/{id}")
     @PreAuthorize("hasAuthority('BloodBank')")
-    public ResponseEntity<BloodInventory> updateBloodInventory(@PathVariable("id") Long id, @RequestBody BloodInventory bloodInventoryRequest) {
+    public ResponseEntity<BloodInventory> updateBloodInventory(@PathVariable("id") Long id,
+            @RequestBody BloodInventory bloodInventoryRequest) {
         BloodInventory bloodInventory = bloodInventoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("BloodInventoryId " + id + "not found"));
         bloodInventory.setBloodType(bloodInventoryRequest.getBloodType());
-        bloodInventory.setBloodRhFactor(bloodInventoryRequest.getBloodRhFactor());
         bloodInventory.setQuantity(bloodInventoryRequest.getQuantity());
 
         return new ResponseEntity<>(bloodInventoryRepository.save(bloodInventory), HttpStatus.OK);
@@ -79,7 +79,7 @@ public class BloodInventoryController {
             bloodInventoryRepository.delete(bloodInventory);
             return ResponseEntity.ok().build();
 
-        }).orElseThrow(() ->new ResourceNotFoundException("BloodInventory id" + id + "not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("BloodInventory id" + id + "not found"));
     }
 
 }

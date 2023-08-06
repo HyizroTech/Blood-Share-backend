@@ -52,13 +52,10 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getRole()
-
-        ));
+                userDetails.getRole()));
     }
 
     @PostMapping("/register/donor")
@@ -69,7 +66,6 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-
         // Create new user's account
         User user = new User(signUpRequest.getName(),
                 encoder.encode(signUpRequest.getPassword()),
@@ -77,8 +73,7 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getPhone(),
                 signUpRequest.getCity(),
-                signUpRequest.getCountry()
-                );
+                signUpRequest.getCountry());
 
         Donor donor = new Donor();
         donor.setBloodType(signUpRequest.getBloodType());
@@ -88,11 +83,8 @@ public class AuthController {
 
         userRepository.save(user);
 
-
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-
-
 
     @PostMapping("/register/BloodBank")
     public ResponseEntity<?> registerBloodBank(@Valid @RequestBody BloodBankSignupRequest signUpRequest) {
@@ -102,7 +94,6 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-
         // Create new user's account
         User user = new User(signUpRequest.getName(),
                 encoder.encode(signUpRequest.getPassword()),
@@ -110,8 +101,7 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getPhone(),
                 signUpRequest.getCity(),
-                signUpRequest.getCountry()
-        );
+                signUpRequest.getCountry());
 
         BloodBank bloodBank = new BloodBank();
         user.setBloodBank(bloodBank);
@@ -119,10 +109,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-
         return ResponseEntity.ok(new MessageResponse("BloodBank registered successfully!"));
-
-
 
     }
 
@@ -134,7 +121,6 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-
         // Create new user's account
         User user = new User(signUpRequest.getName(),
                 encoder.encode(signUpRequest.getPassword()),
@@ -142,16 +128,11 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getPhone(),
                 signUpRequest.getCity(),
-                signUpRequest.getCountry()
-        );
+                signUpRequest.getCountry());
 
         userRepository.save(user);
 
-
         return ResponseEntity.ok(new MessageResponse("Admin registered successfully!"));
     }
-
-
-
 
 }

@@ -16,8 +16,5 @@ public class BloodInventory {
     private String bloodType;
 
     @Column(nullable = false)
-    private String bloodRhFactor;
-
-    @Column(nullable = false)
     private int quantity;
 }

@@ -21,7 +21,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth/test")
+@RequestMapping("/api")
 public class AppointmentController {
     @Autowired
     DonorRepository donorRepository;
@@ -31,17 +31,6 @@ public class AppointmentController {
 
     @Autowired
     BloodBankRepository bloodBankRepository;
-
-//    @PostMapping("/donor/{id}/bloodBank/{bloodBankId}/appointment")
-//    @PreAuthorize("hasAuthority('Donor')")
-//    public ResponseEntity<?> createAppointment(@PathVariable(value = "id") Long donorId,@PathVariable(value = "bloodBankId") Long bloodBankId,
-//                                                     @RequestBody Appointment appointmentRequest) {
-//        return donorRepository.findById(donorId).map(donor -> {
-//            donor.getAppointments().add(appointmentRequest);
-//            appointmentRepository.save(appointmentRequest);
-//            return ResponseEntity.ok(new MessageResponse("Appointment registered successfully!"));
-//        }).orElseThrow(() -> new ResourceNotFoundException("Not found Donor with id = " + donorId));
-//    }
 
     @PostMapping("/donor/{id}/bloodBank/{bloodBankId}/appointment")
     @PreAuthorize("hasAuthority('Donor')")
@@ -60,14 +49,8 @@ public class AppointmentController {
         bloodBank.getAppointments().add(appointmentRequest);
         appointmentRepository.save(appointmentRequest);
 
-
-
-
         return ResponseEntity.ok(new MessageResponse("Appointment registered successfully!"));
     }
-
-
-
 
     @GetMapping("/donor/{id}/appointments")
     @PreAuthorize("hasAuthority('Donor')")
@@ -81,7 +64,7 @@ public class AppointmentController {
         Donor donor = optionalDonor.get();
         Set<Appointment> appointments = donor.getAppointments();
 
-        if(appointments.isEmpty()){
+        if (appointments.isEmpty()) {
             throw new ResourceNotFoundException("No Appointments Found");
         }
 
@@ -89,13 +72,15 @@ public class AppointmentController {
             return ResponseEntity.ok(new ArrayList<>(appointments));
         }
     }
+
     @PutMapping("/appointment/{id}")
     @PreAuthorize("hasAuthority('Donor')")
-    public ResponseEntity<Appointment> updateAppointment(@PathVariable("id") Long id, @RequestBody Appointment appointmentRequest) {
+    public ResponseEntity<Appointment> updateAppointment(@PathVariable("id") Long id,
+            @RequestBody Appointment appointmentRequest) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AppointmentId " + id + "not found"));
-            appointment.setDate(appointmentRequest.getDate());
-            appointment.setTime(appointmentRequest.getTime());
+        appointment.setDate(appointmentRequest.getDate());
+        appointment.setTime(appointmentRequest.getTime());
         return new ResponseEntity<>(appointmentRepository.save(appointment), HttpStatus.OK);
     }
 
@@ -107,7 +92,7 @@ public class AppointmentController {
             appointmentRepository.delete(appointment);
             return ResponseEntity.ok().build();
 
-        }).orElseThrow(() ->new ResourceNotFoundException("Appointment id" + id + "not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Appointment id" + id + "not found"));
     }
 
 }

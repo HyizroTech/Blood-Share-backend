@@ -19,7 +19,7 @@ import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth/test")
+@RequestMapping("/api")
 public class PatientController {
     @Autowired
     BloodBankRepository bloodBankRepository;
@@ -29,13 +29,14 @@ public class PatientController {
     @PostMapping("/bloodBank/{id}/patient")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<?> createBloodBankPatients(@PathVariable(value = "id") Long bloodBankId,
-                                                           @RequestBody Patient patientRequest) {
+            @RequestBody Patient patientRequest) {
         return bloodBankRepository.findById(bloodBankId).map(bloodBank -> {
             bloodBank.getPatients().add(patientRequest);
             patientRepository.save(patientRequest);
             return ResponseEntity.ok(new MessageResponse("Patient registered successfully!"));
         }).orElseThrow(() -> new ResourceNotFoundException("Not found BloodBank with id = " + bloodBankId));
     }
+
     @GetMapping("/bloodBank/{id}/patients")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<List<Patient>> getBloodBankPatients(@PathVariable(value = "id") Long bloodBankid) {
@@ -48,7 +49,7 @@ public class PatientController {
         BloodBank bloodBank = optionalBloodBank.get();
         Set<Patient> patients = bloodBank.getPatients();
 
-        if(patients.isEmpty()){
+        if (patients.isEmpty()) {
             throw new ResourceNotFoundException("No Patients Found");
         }
 
@@ -56,6 +57,7 @@ public class PatientController {
             return ResponseEntity.ok(new ArrayList<>(patients));
         }
     }
+
     @PutMapping("/patient/{id}")
     @PreAuthorize("hasAuthority('BloodBank')")
     public ResponseEntity<Patient> updatePatient(@PathVariable("id") Long id, @RequestBody Patient patientRequest) {
@@ -77,7 +79,7 @@ public class PatientController {
             patientRepository.delete(patient);
             return ResponseEntity.ok().build();
 
-        }).orElseThrow(() ->new ResourceNotFoundException("Patient id" + id + "not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Patient id" + id + "not found"));
     }
 
 }

@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth/test")
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -31,31 +30,19 @@ public class AdminController {
     @Autowired
     BloodBankRepository bloodBankRepository;
 
-    @GetMapping("/admin/bloodBanks")
+    @GetMapping("/bloodBanks")
     @PreAuthorize("hasAuthority('Admin') or hasAuthority('Donor')")
-    public ResponseEntity<List<BloodBankDTO>> getBloodBanks() {
+    public ResponseEntity<ArrayList<BloodBank>> getBloodBanks() {
         List<BloodBank> optionalBloodBank = bloodBankRepository.findAll();
 
         if (optionalBloodBank.isEmpty()) {
             throw new ResourceNotFoundException("No BloodBanks Found = ");
         }
 
-        List<BloodBankDTO> bloodBankDTOs = new ArrayList<>();
-
-        // Map BloodBank entity to BloodBankDTO
-        for (BloodBank bloodBank : optionalBloodBank) {
-            BloodBankDTO dto = new BloodBankDTO();
-            dto.setName(bloodBank.getUser().getName());
-            dto.setPhone(bloodBank.getUser().getPhone());
-            dto.setCity(bloodBank.getUser().getCity());
-            bloodBankDTOs.add(dto);
-        }
-
-        return ResponseEntity.ok(bloodBankDTOs);
+        return ResponseEntity.ok(new ArrayList<>(optionalBloodBank));
     }
 
-
-    @GetMapping("/admin/donors")
+    @GetMapping("/donors")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<Donor>> getDonors() {
         List<Donor> optionalDonor = donorRepository.findAll();
@@ -69,7 +56,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<User>> getUsers() {
         List<User> optionalUser = userRepository.findAll();
@@ -83,6 +70,4 @@ public class AdminController {
         }
     }
 
-
 }
-

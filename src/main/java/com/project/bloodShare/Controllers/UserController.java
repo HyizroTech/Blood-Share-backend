@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth/test")
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -58,21 +58,19 @@ public class UserController {
         }
     }
 
-
     @DeleteMapping("/user/{id}/donor")
     @PreAuthorize("hasAuthority('Donor')")
     public ResponseEntity<Object> deleteUserDonor(@PathVariable Long id) {
 
         return userRepository.findById(id).map(user -> {
-            if(user.getRole().equals("Donor")) {
+            if (user.getRole().equals("Donor")) {
                 userRepository.delete(user);
                 return ResponseEntity.ok().build();
 
-            }
-            else {
+            } else {
                 return ResponseEntity.badRequest().build();
             }
-        }).orElseThrow(() ->new ResourceNotFoundException("User id" + id + "not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("User id" + id + "not found"));
 
     }
 
@@ -84,12 +82,11 @@ public class UserController {
             if (user.getRole().equals("BloodBank")) {
                 userRepository.delete(user);
                 return ResponseEntity.ok().build();
-            }
-            else{
+            } else {
                 return ResponseEntity.badRequest().build();
             }
 
-        }).orElseThrow(() ->new ResourceNotFoundException("User id" + id + "not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("User id" + id + "not found"));
     }
 
 }
